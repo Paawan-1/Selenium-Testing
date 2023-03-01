@@ -4,64 +4,37 @@ on: [push]
 
 jobs:
 
-  build:
+   build:
 
-    runs-on: ubuntu-latest
+     runs-on: ubuntu-latest
 
-    steps:
+     steps:
 
-    - uses: actions/checkout@v2
+       uses: actions/checkout@v2
 
-    - name: Set up JDK 1.8
+    -  name: Set up JDK 1.8
 
-      uses: actions/setup-java@v1
+       uses: actions/setup-java@v1
 
-      with:
-
-        java-version: 1.8
-
-    - name: Build with Maven
-
-      run: mvn -B package --file pom.xml
-
-  test_1:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - uses: actions/checkout@v2
-
-    - name: Set up JDK 1.8
-
-      uses: actions/setup-java@v1
-
-      with:
+       with:
 
         java-version: 1.8
 
-    - name: Test with Maven
+        server-id: github 
 
-      run: mvn clean test
+        settings-path: ${{ github.workspace }} 
 
-  test_2:
+    -  name: Install Google Chrome 
 
-    runs-on: ubuntu-latest
+       run: |
 
-    steps:
+              chmod +x ./scripts/InstallChrome.sh
 
-    - uses: actions/checkout@v2
+                          ./scripts/InstallChrome.sh 
 
-    - name: Set up JDK 1.8
+    -  name: Build with Maven
 
-      uses: actions/setup-java@v1
+       run: mvn -B package --file pom.xml test
 
-      with:
-
-        java-version: 1.8
-
-    - name: Test with Maven
-
-      run: mvn -B package --file pom.xml test
  
 
